@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#111111">
+<title>Painel Street</title>
+<link rel="icon" href="assets/img/logo-street.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:ital,wght@1,800;1,900&display=swap">
+<link rel="stylesheet" href="assets/css/admin.css?v=20261020002532">
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<section id="login" class="login" hidden>
+  <form id="form-login" class="login-card" autocomplete="off">
+    <img src="assets/img/logo-street.png" alt="Street Distribuidora" class="login-logo" width="220" height="87">
+    <h1 class="tit">Painel <span>de pedidos</span></h1>
+    <p class="login-demo"><strong>Modo demonstração</strong> — dados de exemplo. Nada aqui é um pedido real.</p>
+    <label class="campo">
+      <span>Senha do painel</span>
+      <input id="senha" type="password" inputmode="text" autocomplete="current-password" required placeholder="Digite a senha">
+    </label>
+    <p id="login-erro" class="login-erro" role="alert" hidden>Senha incorreta. Tente de novo.</p>
+    <button type="submit" class="btn btn-pri btn-grande">Entrar no painel</button>
+    <p class="login-dica">Na demonstração a senha é <strong>street</strong>. Em produção cada pessoa da equipe tem o próprio login.</p>
+  </form>
+</section>
+
+<!-- ============ APP ============ -->
+<div id="app" class="app" hidden>
+  <aside id="sidebar" class="sidebar" aria-label="Menu do painel">
+    <div class="side-topo">
+      <a href="#/visao" class="side-logo" aria-label="Visão geral"><img src="assets/img/logo-street.png" alt="Street Distribuidora" width="150" height="60"></a>
+      <span class="side-sub">Painel</span>
+      <button class="btn-ico side-fechar" data-act="menu-fechar" aria-label="Fechar menu"><svg class="ico"><use href="#i-x"/></svg></button>
+    </div>
+    <nav class="side-nav">
+      <a href="#/visao" data-nav="visao"><svg class="ico"><use href="#i-home"/></svg><span>Visão geral</span></a>
+      <a href="#/pedidos" data-nav="pedidos"><svg class="ico"><use href="#i-pedidos"/></svg><span>Pedidos</span><b class="cont" id="cont-pix" title="Pedidos aguardando pagamento" hidden></b></a>
+      <a href="#/separacao" data-nav="separacao"><svg class="ico"><use href="#i-sep"/></svg><span>Separação</span><b class="cont cont-azul" id="cont-sep" title="Pedidos para separar" hidden></b></a>
+      <a href="#/lojistas" data-nav="lojistas"><svg class="ico"><use href="#i-loja"/></svg><span>Lojistas</span><b class="cont" id="cont-loj" title="Cadastros pendentes" hidden></b></a>
+      <a href="#/produtos" data-nav="produtos"><svg class="ico"><use href="#i-tag"/></svg><span>Produtos</span></a>
+      <a href="#/config" data-nav="config"><svg class="ico"><use href="#i-cfg"/></svg><span>Configurações</span></a>
+    </nav>
+    <div class="side-pe">
+      <a href="index.html" target="_blank" rel="noopener" class="side-loja"><svg class="ico"><use href="#i-ext"/></svg><span>Ver loja</span></a>
+      <button class="side-sair" data-act="sair"><svg class="ico"><use href="#i-sair"/></svg><span>Sair</span></button>
+    </div>
+  </aside>
+  <div class="menu-fundo" data-act="menu-fechar" hidden></div>
+
+  <div class="main">
+    <header class="topo">
+      <button class="btn-ico topo-menu" data-act="menu-abrir" aria-label="Abrir menu"><svg class="ico"><use href="#i-menu"/></svg></button>
+      <img src="assets/img/logo-street.png" alt="" class="topo-logo" width="90" height="36">
+      <h1 id="titulo" class="tit topo-tit">Visão geral</h1>
+      <div class="topo-dir">
+        <span id="selo-exemplo" class="selo-ex" hidden><span class="selo-pre">Dados de </span>exemplo</span>
+        <span class="aovivo" title="O painel atualiza sozinho quando a loja recebe um pedido"><i aria-hidden="true"></i><span class="aovivo-txt">Ao vivo</span></span>
+        <button id="btn-som" class="btn-ico" data-act="som" aria-pressed="true" aria-label="Som de novo pedido ligado" title="Som de novo pedido"><svg class="ico"><use href="#i-som"/></svg></button>
+      </div>
+    </header>
+    <main id="view" class="view" tabindex="-1"></main>
+  </div>
+
+  <nav class="barra-inf" aria-label="Atalhos">
+    <a href="#/visao" data-nav="visao"><svg class="ico"><use href="#i-home"/></svg><span>Início</span></a>
+    <a href="#/pedidos" data-nav="pedidos"><svg class="ico"><use href="#i-pedidos"/></svg><span>Pedidos</span><b class="cont" id="cont-pix-m" title="Pedidos aguardando pagamento" hidden></b></a>
+    <a href="#/separacao" data-nav="separacao"><svg class="ico"><use href="#i-sep"/></svg><span>Separar</span></a>
+    <a href="#/lojistas" data-nav="lojistas"><svg class="ico"><use href="#i-loja"/></svg><span>Lojistas</span><b class="cont" id="cont-loj-m" hidden></b></a>
+    <button data-act="menu-abrir"><svg class="ico"><use href="#i-menu"/></svg><span>Mais</span></button>
+  </nav>
+</div>
+
+<!-- Painel lateral do pedido -->
+<div id="gaveta-fundo" class="gaveta-fundo" data-act="gaveta-fechar" hidden></div>
+<aside id="gaveta" class="gaveta" role="dialog" aria-modal="true" aria-labelledby="gaveta-tit" hidden></aside>
+
+<!-- Confirmação -->
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-tit" hidden>
+  <div class="modal-card">
+    <h2 id="modal-tit" class="tit"></h2>
+    <div id="modal-txt"></div>
+    <div class="modal-acoes">
+      <button class="btn btn-sec" data-act="modal-nao">Voltar</button>
+      <button class="btn btn-pri" data-act="modal-sim" id="modal-sim">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<div id="toasts" class="toasts" aria-live="polite"></div>
+<div id="print-area" class="print-area"></div>
+
+<!-- Ícones -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
+    <symbol id="i-pedidos" viewBox="0 0 24 24"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"/><path d="M9 7h6M9 11h6M9 15h4"/></symbol>
+    <symbol id="i-sep" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2h6v2"/><path d="M9 12.5l2 2 4-4.5"/></symbol>
+    <symbol id="i-loja" viewBox="0 0 24 24"><path d="M3 9l2-5h14l2 5"/><path d="M4 9v11h16V9"/><path d="M3 9h18"/><path d="M10 20v-6h4v6"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.5 12.5l-8 8-9-9V3.5h8z"/><circle cx="7.5" cy="7.5" r="1.5"/></symbol>
+    <symbol id="i-cfg" viewBox="0 0 24 24"><path d="M4 6h9M19 6h1M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="16" cy="6" r="2.2"/><circle cx="9" cy="12" r="2.2"/><circle cx="17" cy="18" r="2.2"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M21 3l-9 9"/><path d="M19 14v6H4V5h6"/></symbol>
+    <symbol id="i-sair" viewBox="0 0 24 24"><path d="M9 21H4V3h5"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-busca" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="1"/><path d="M6 14h12v7H6z"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><path d="M20.5 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-4.7A8.5 8.5 0 1 1 20.5 12z"/><path d="M9 9.5c.3 2.4 2.6 4.8 5.5 5.3l1.2-1.4-1.9-1-.8.8c-1-.4-2-1.4-2.4-2.4l.8-.8-1-1.9z"/></symbol>
+    <symbol id="i-ok" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L20 6.5"/></symbol>
+    <symbol id="i-som" viewBox="0 0 24 24"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></symbol>
+    <symbol id="i-mudo" viewBox="0 0 24 24"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></symbol>
+    <symbol id="i-caminhao" viewBox="0 0 24 24"><path d="M2 6h12v10H2z"/><path d="M14 9h4l4 4v3h-8"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+    <symbol id="i-pix" viewBox="0 0 24 24"><path d="M12 2.5l4 4-4 4-4-4zM12 13.5l4 4-4 4-4-4zM2.5 12l4-4 4 4-4 4zM13.5 12l4-4 4 4-4 4z"/></symbol>
+    <symbol id="i-sino" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4z"/><path d="M10 21h4"/></symbol>
+    <symbol id="i-desfazer" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></symbol>
+    <symbol id="i-copiar" viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V3H3v13h5"/></symbol>
+  </defs>
+</svg>
+
+<script src="assets/js/config.js?v=20261020002532"></script>
+<script src="assets/js/store.js?v=20261020002532"></script>
+<script src="assets/js/admin.js?v=20261020002532"></script>
+</body>
+</html>
